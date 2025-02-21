@@ -1,0 +1,6 @@
+homepage: "https://www.flarelane.com"
+documentation: "https://docs.flarelane.co.kr"
+versions:
+  # Latest version
+  - sha:
+  - changeNotes: "Initial release"
