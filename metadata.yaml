@@ -2,5 +2,5 @@ homepage: "https://www.flarelane.com"
 documentation: "https://docs.flarelane.co.kr"
 versions:
   # Latest version
-  - sha:
+  - sha: d168cdaffcd56cd596e80a50c0295ea2791e5201
   - changeNotes: "Initial release"
