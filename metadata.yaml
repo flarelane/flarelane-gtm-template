@@ -3,4 +3,4 @@ documentation: "https://docs.flarelane.co.kr"
 versions:
   # Latest version
   - sha: bfda911961604672b5a2af07de5f7809104a5f13
-  - changeNotes: "Initial release"
+    changeNotes: Initial release
