@@ -20,11 +20,11 @@ ___INFO___
     "PERSONALIZATION"
   ],
   "brand": {
-    "id": "brand_dummy",
+    "id": "brand_flarelane",
     "displayName": "FlareLane",
     "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAYAAADNkKWqAAAACXBIWXMAAAsTAAALEwEAmpwYAAAGdmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDUgNzkuMTYzNDk5LCAyMDE4LzA4LzEzLTE2OjQwOjIyICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgMjAxOSAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjAtMDYtMDJUMDA6NTI6MTErMDk6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDIwLTA2LTAyVDAwOjU3OjU4KzA5OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDIwLTA2LTAyVDAwOjU3OjU4KzA5OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgcGhvdG9zaG9wOklDQ1Byb2ZpbGU9InNSR0IgSUVDNjE5NjYtMi4xIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6Y2FlMjc5OTUtZTIzNS1hODRiLTk1M2UtYjFmMTI0ZGIyZjE3IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjNkN2Y2OWRlLTlkNDAtNDcwNi05ZmZkLTZjYjUxNGE0MTJhNSIgeG1wTU06T3JpZ2luYWxEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6M2YwYzQyNzQtZWJjOC03MTQ3LWE0YmUtYmRiZDhmM2MxNjYxIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpmMmQ1ZDIxOC01NGNlLTQ2MmUtYTY5MS1kMDFiMTJiZGYxZmYiIHN0RXZ0OndoZW49IjIwMjAtMDYtMDJUMDA6NTI6MTErMDk6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE5IChNYWNpbnRvc2gpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjb252ZXJ0ZWQiIHN0RXZ0OnBhcmFtZXRlcnM9ImZyb20gYXBwbGljYXRpb24vdm5kLmFkb2JlLnBob3Rvc2hvcCB0byBpbWFnZS9wbmciLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249InNhdmVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjNkN2Y2OWRlLTlkNDAtNDcwNi05ZmZkLTZjYjUxNGE0MTJhNSIgc3RFdnQ6d2hlbj0iMjAyMC0wNi0wMlQwMDo1Nzo1OCswOTowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHN0RXZ0OmNoYW5nZWQ9Ii8iLz4gPC9yZGY6U2VxPiA8L3htcE1NOkhpc3Rvcnk+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+bFwfoAAACDNJREFUeJzt1i2OZVUUhuHTBFXdhkBgEAQFBkdgEjgmgAY8bXoIDKJ7BiAJChQSDI6E8BMSBJ1cBKToSt26dX/2OXuv/T3PCD6z3qwH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"
   },
-  "description": "FlareLane Web SDK GTM Template\nhttps://flarelane.com/",
+  "description": "The template using the FlareLane SDK provides features such as Track Event, Set Tags, and more. \n https://flarelane.com/",
   "containerContexts": [
     "WEB"
   ]
@@ -68,15 +68,13 @@ ___TEMPLATE_PARAMETERS___
         "displayValue": "Initialize"
       }
     ],
-    "simpleValueType": true,
-    "help": "Select the method to be executed in the FlareLane Web SDK."
+    "simpleValueType": true
   },
   {
     "type": "TEXT",
     "name": "projectId",
     "displayName": "Project ID",
     "simpleValueType": true,
-    "help": "FlareLane Project ID. Check this value in the FlareLane Console.",
     "enablingConditions": [
       {
         "paramName": "method",
@@ -91,7 +89,6 @@ ___TEMPLATE_PARAMETERS___
     "displayName": "Service Worker Path",
     "simpleValueType": true,
     "valueHint": "Optional",
-    "help": "If there is a registered Service Worker, provide its path. e.g. /sw.js",
     "enablingConditions": [
       {
         "paramName": "method",
@@ -105,7 +102,6 @@ ___TEMPLATE_PARAMETERS___
     "name": "userId",
     "displayName": "User ID",
     "simpleValueType": true,
-    "help": "Set the userId on the device.",
     "enablingConditions": [
       {
         "paramName": "method",
@@ -119,7 +115,6 @@ ___TEMPLATE_PARAMETERS___
     "name": "eventName",
     "displayName": "Event Name",
     "simpleValueType": true,
-    "help": "Event name for the event to be tracked.",
     "enablingConditions": [
       {
         "paramName": "method",
@@ -148,7 +143,6 @@ ___TEMPLATE_PARAMETERS___
       }
     ],
     "newRowButtonText": "Add Data",
-    "help": "Event data for the event to be tracked.",
     "enablingConditions": [
       {
         "paramName": "method",
@@ -184,13 +178,12 @@ ___TEMPLATE_PARAMETERS___
         "type": "EQUALS"
       }
     ],
-    "help": "Set tags.",
     "newRowButtonText": "Add Tag"
   },
   {
     "type": "SIMPLE_TABLE",
     "name": "tagsToRemove",
-    "displayName": "Tags to Remove",
+    "displayName": "Tags",
     "simpleTableColumns": [
       {
         "defaultValue": "",
@@ -221,15 +214,14 @@ ___TEMPLATE_PARAMETERS___
         "paramValue": "displayInApp",
         "type": "EQUALS"
       }
-    ],
-    "help": "Group name for the in-app message to be displayed."
+    ]
   },
   {
     "type": "CHECKBOX",
     "name": "debug",
     "checkboxText": "Debug Mode",
     "simpleValueType": true,
-    "help": "Check this option to enable debug mode and view logs."
+    "help": "Enable debug mode to view logs."
   }
 ]
 
