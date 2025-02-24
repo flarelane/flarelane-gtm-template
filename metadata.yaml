@@ -2,5 +2,8 @@ homepage: "https://www.flarelane.com"
 documentation: "https://docs.flarelane.co.kr"
 versions:
   # Latest version
+  - sha: cf794ed4f9ba156a1c27661889342ae0e2efe32a
+    changeNotes: Fix setUserId method logic
+  # Older versions 
   - sha: bfda911961604672b5a2af07de5f7809104a5f13
     changeNotes: Initial release
