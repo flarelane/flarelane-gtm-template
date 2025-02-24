@@ -261,9 +261,9 @@ if (method === 'setUserId') {
 }
 
 // FlareLane.setUserId
-if (method === 'removeUserId') {
+if (method === 'setUserId') {
   callInWindow(pathToFunction('setUserId'), null);
-  log('Execute "Remove User ID"');
+  log('Execute "Set User ID"');
 }
 
 // FlareLane.trackEvent
