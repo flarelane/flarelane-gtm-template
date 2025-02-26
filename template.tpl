@@ -223,12 +223,6 @@ ___TEMPLATE_PARAMETERS___
     "checkboxText": "Debug Mode",
     "simpleValueType": true,
     "help": "Enable debug mode to view logs."
-  },
-  {
-    "type": "CHECKBOX",
-    "name": "deferred",
-    "checkboxText": "Deferred",
-    "simpleValueType": true
   }
 ]
 
@@ -246,8 +240,7 @@ const log = data.debug ? (message) => logToConsole("GTM:FlareLane: ", message) :
 
 // window.FlareLane이 있는 타이밍을 예측할 수 없을 때
 const deferredArrayName = 'FlareLaneDeferred';
-let deferred = data.deferred;
-
+let deferred = false;
 if (!copyFromWindow('FlareLane')) {
   // FlareLane 객체가 없으면 FlareLaneDeferred 큐에 삽입
   deferred = true;
