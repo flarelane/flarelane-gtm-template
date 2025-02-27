@@ -714,7 +714,6 @@ ___WEB_PERMISSIONS___
 
 
 ___TESTS___
-
 setup: |-
   var mockData;
 
@@ -727,171 +726,200 @@ setup: |-
 
   const logToConsole = require('logToConsole');
   logToConsole('Setup block executed');
+
 scenarios:
-- name: Set User ID
-  code: |-
-    mockData = {
-      method: 'setUserId',
-      userId: 'testUser123',
-      debug: true
-    };
+  - name: "Set User ID - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'setUserId',
+        userId: 'testUser123',
+        debug: true
+      };
 
-    mock('callInWindow', function(method, userId) {
-      if (method !== 'FlareLane.setUserId') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(userId).isEqualTo('testUser123');
-    });
+      mock('callInWindow', function(method, userId) {
+        assertThat(method).isEqualTo('FlareLane.setUserId');
+        assertThat(userId).isEqualTo('testUser123');
+      });
 
-    runCode(mockData);
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.setUserId', 'testUser123');
+      assertApi('gtmOnSuccess').wasCalled();
 
-    assertApi('callInWindow').wasCalledWith('FlareLane.setUserId', 'testUser123');
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Remove User ID
-  code: |-
-    mockData = {
-      method: 'removeUserId',
-      debug: true
-    };
+  - name: "Set User ID - Deferred Execution"
+    code: |-
+      mockData = {
+        method: 'setUserId',
+        userId: 'testUser123',
+        debug: true
+      };
 
-    mock('callInWindow', function(method, param) {
-      if (method !== 'FlareLane.setUserId') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(param).isEqualTo(null);
-    });
+      mock('copyFromWindow', function(object) {
+        return undefined;
+      });
 
-    runCode(mockData);
+      mock('createQueue', function(queueName) {
+        assertThat(queueName).isEqualTo('FlareLaneDeferred');
+        return function(callback) {
+          assertThat(typeof callback).isEqualTo('function');
+        };
+      });
 
-    assertApi('callInWindow').wasCalledWith('FlareLane.setUserId', null);
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Track Event
-  code: |-
-    mockData = {
-      method: 'trackEvent',
-      eventName: 'purchaseComplete',
-      eventData: [
-        { key: 'price', value: '1000' },
-        { key: 'currency', value: 'KRW' }
-      ],
-      debug: true
-    };
+      runCode(mockData);
+      assertApi('gtmOnSuccess').wasCalled();
 
-    mock('callInWindow', function(method, eventName, properties) {
-      if (method !== 'FlareLane.trackEvent') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(eventName, '이벤트명이 맞는지 확인').isEqualTo('purchaseComplete');
-      assertThat(properties.price, 'price 속성').isEqualTo('1000');
-      assertThat(properties.currency, 'currency 속성').isEqualTo('KRW');
-    });
+  - name: "Remove User ID - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'removeUserId',
+        debug: true
+      };
 
-    runCode(mockData);
+      mock('callInWindow', function(method, userId) {
+        assertThat(method).isEqualTo('FlareLane.setUserId');
+        assertThat(userId).isEqualTo(null);
+      });
 
-    assertApi('callInWindow').wasCalledWith(
-      'FlareLane.trackEvent',
-      'purchaseComplete',
-      { price: '1000', currency: 'KRW' }
-    );
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Set Tags
-  code: |-
-    mockData = {
-      method: 'setTags',
-      tags: [
-        { key: 'grade', value: 'premium' },
-        { key: 'region', value: 'APAC' }
-      ],
-      debug: true
-    };
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.setUserId', null);
+      assertApi('gtmOnSuccess').wasCalled();
 
-    mock('callInWindow', function(method, tagsObject) {
-      if (method !== 'FlareLane.setTags') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(tagsObject.grade).isEqualTo('premium');
-      assertThat(tagsObject.region).isEqualTo('APAC');
-    });
+  - name: "Remove User ID - Deferred Execution"
+    code: |-
+      mockData = {
+        method: 'removeUserId',
+        debug: true
+      };
 
-    runCode(mockData);
+      mock('copyFromWindow', function(object) {
+        return undefined;
+      });
 
-    assertApi('callInWindow').wasCalledWith(
-      'FlareLane.setTags',
-      { grade: 'premium', region: 'APAC' }
-    );
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Remove Tags
-  code: |-
-    mockData = {
-      method: 'removeTags',
-      tagsToRemove: [
-        { key: 'grade' },
-        { key: 'region' }
-      ],
-      debug: true
-    };
+      mock('createQueue', function(queueName) {
+        assertThat(queueName).isEqualTo('FlareLaneDeferred');
+        return function(callback) {
+          assertThat(typeof callback).isEqualTo('function');
+        };
+      });
 
-    mock('callInWindow', function(method, tagsObject) {
-      if (method !== 'FlareLane.setTags') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(tagsObject.grade).isEqualTo(null);
-      assertThat(tagsObject.region).isEqualTo(null);
-    });
+      runCode(mockData);
+      assertApi('gtmOnSuccess').wasCalled();
 
-    runCode(mockData);
+  - name: "Track Event - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'trackEvent',
+        eventName: 'purchaseComplete',
+        eventData: [{ key: 'price', value: '1000' }],
+        debug: true
+      };
 
-    assertApi('callInWindow').wasCalledWith(
-      'FlareLane.setTags',
-      { grade: null, region: null }
-    );
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Display In-App Message
-  code: |-
-    mockData = {
-      method: 'displayInApp',
-      displayInAppGroup: 'welcomeMessage',
-      debug: true
-    };
+      mock('callInWindow', function(method, eventName, properties) {
+        assertThat(method).isEqualTo('FlareLane.trackEvent');
+        assertThat(eventName).isEqualTo('purchaseComplete');
+        assertThat(properties.price).isEqualTo('1000');
+      });
 
-    mock('callInWindow', function(method, groupName) {
-      if (method !== 'FlareLane.displayInApp') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(groupName).isEqualTo('welcomeMessage');
-    });
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.trackEvent', 'purchaseComplete', { price: '1000' });
+      assertApi('gtmOnSuccess').wasCalled();
 
-    runCode(mockData);
+  - name: "Track Event - Deferred Execution"
+    code: |-
+      mockData = {
+        method: 'trackEvent',
+        eventName: 'purchaseComplete',
+        eventData: [{ key: 'price', value: '1000' }],
+        debug: true
+      };
 
-    assertApi('callInWindow').wasCalledWith('FlareLane.displayInApp', 'welcomeMessage');
-    assertApi('gtmOnSuccess').wasCalled();
-- name: Initialize
-  code: |-
-    mockData = {
-      method: 'initialize',
-      projectId: 'my_flarelane_project',
-      serviceWorkerPath: '/sw.js',
-      debug: true
-    };
+      mock('copyFromWindow', function(object) {
+        return undefined;
+      });
 
-    mock('callInWindow', function(method, configObj) {
-      if (method !== 'FlareLane.initialize') {
-        fail('Unexpected method ' + method + ' was called.');
-      }
-      assertThat(configObj.projectId).isEqualTo('my_flarelane_project');
-      assertThat(configObj.serviceWorkerPath).isEqualTo('/sw.js');
-    });
+      mock('createQueue', function(queueName) {
+        assertThat(queueName).isEqualTo('FlareLaneDeferred');
+        return function(callback) {
+          assertThat(typeof callback).isEqualTo('function');
+        };
+      });
 
-    runCode(mockData);
+      runCode(mockData);
+      assertApi('gtmOnSuccess').wasCalled();
 
-    assertApi('callInWindow').wasCalledWith(
-      'FlareLane.initialize',
-      {
+  - name: "Set Tags - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'setTags',
+        tags: [
+          { key: 'grade', value: 'premium' },
+          { key: 'region', value: 'APAC' }
+        ],
+        debug: true
+      };
+
+      mock('callInWindow', function(method, tagsObject) {
+        assertThat(method).isEqualTo('FlareLane.setTags');
+        assertThat(tagsObject.grade).isEqualTo('premium');
+        assertThat(tagsObject.region).isEqualTo('APAC');
+      });
+
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.setTags', { grade: 'premium', region: 'APAC' });
+      assertApi('gtmOnSuccess').wasCalled();
+
+  - name: "Remove Tags - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'removeTags',
+        tagsToRemove: [{ key: 'grade' }, { key: 'region' }],
+        debug: true
+      };
+
+      mock('callInWindow', function(method, tagsObject) {
+        assertThat(method).isEqualTo('FlareLane.setTags');
+        assertThat(tagsObject.grade).isEqualTo(null);
+        assertThat(tagsObject.region).isEqualTo(null);
+      });
+
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.setTags', { grade: null, region: null });
+      assertApi('gtmOnSuccess').wasCalled();
+
+  - name: "Display In-App Message - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'displayInApp',
+        displayInAppGroup: 'welcomeMessage',
+        debug: true
+      };
+
+      mock('callInWindow', function(method, groupName) {
+        assertThat(method).isEqualTo('FlareLane.displayInApp');
+        assertThat(groupName).isEqualTo('welcomeMessage');
+      });
+
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.displayInApp', 'welcomeMessage');
+      assertApi('gtmOnSuccess').wasCalled();
+
+  - name: "Initialize - FlareLane Exists"
+    code: |-
+      mockData = {
+        method: 'initialize',
         projectId: 'my_flarelane_project',
-        serviceWorkerPath: '/sw.js'
-      }
-    );
-    assertApi('gtmOnSuccess').wasCalled();
+        serviceWorkerPath: '/sw.js',
+        debug: true
+      };
+
+      mock('callInWindow', function(method, configObj) {
+        assertThat(method).isEqualTo('FlareLane.initialize');
+        assertThat(configObj.projectId).isEqualTo('my_flarelane_project');
+        assertThat(configObj.serviceWorkerPath).isEqualTo('/sw.js');
+      });
+
+      runCode(mockData);
+      assertApi('callInWindow').wasCalledWith('FlareLane.initialize', { projectId: 'my_flarelane_project', serviceWorkerPath: '/sw.js' });
+      assertApi('gtmOnSuccess').wasCalled();
 
 
 ___NOTES___
