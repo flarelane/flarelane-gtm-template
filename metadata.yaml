@@ -2,11 +2,11 @@ homepage: "https://www.flarelane.com"
 documentation: "https://docs.flarelane.co.kr"
 versions:
   # Latest version
+  - sha: 577732ca077dec7b2c8ef040be5b2aebb6576a66
+    changeNotes: Add set user attributes method
+  # Older versions
   - sha: 04d6765cc896a233ecce1012562e5c1f1be7a43b
-    changeNotes: |2
-      Fix deferred execution to ensure all FlareLane methods correctly enqueue when SDK is unavailable
-      Add test case
-  # Older versions 
+    changeNotes: Fix deferred execution to ensure all FlareLane methods correctly enqueue when SDK is unavailable Add test case
   - sha: cf794ed4f9ba156a1c27661889342ae0e2efe32a
     changeNotes: Fix setUserId method logic
   - sha: bfda911961604672b5a2af07de5f7809104a5f13
