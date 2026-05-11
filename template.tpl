@@ -222,6 +222,34 @@ ___TEMPLATE_PARAMETERS___
   },
   {
     "type": "SIMPLE_TABLE",
+    "name": "displayInAppData",
+    "displayName": "Data",
+    "simpleTableColumns": [
+      {
+        "defaultValue": "",
+        "displayName": "Key",
+        "name": "key",
+        "type": "TEXT",
+        "isUnique": true
+      },
+      {
+        "defaultValue": "",
+        "displayName": "Value",
+        "name": "value",
+        "type": "TEXT"
+      }
+    ],
+    "newRowButtonText": "Add Data",
+    "enablingConditions": [
+      {
+        "paramName": "method",
+        "paramValue": "displayInApp",
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
+    "type": "SIMPLE_TABLE",
     "name": "userAttributes",
     "displayName": "User Attributes",
     "simpleTableColumns": [
@@ -403,15 +431,22 @@ if (method === 'setUserAttributes') {
 // FlareLane.displayInApp
 if (method ===  'displayInApp') {
   const group = data.displayInAppGroup;
-  
+  const displayInAppData = {};
+
+  if (data.displayInAppData && data.displayInAppData.length > 0) {
+    data.displayInAppData.forEach((item) => {
+      displayInAppData[item.key] = item.value;
+    });
+  }
+
   if (group) {
     if (deferred) {
       const deferredPush = createQueue(deferredArrayName);
-      deferredPush((FlareLane) => { FlareLane.displayInApp(group); });
+      deferredPush((FlareLane) => { FlareLane.displayInApp(group, displayInAppData); });
     } else {
-      callInWindow(pathToFunction('displayInApp'), group);
+      callInWindow(pathToFunction('displayInApp'), group, displayInAppData);
     }
-    log('Execute "Display In-App Message": ' + group);
+    log('Execute "Display In-App Message": ' + group + ', ' + displayInAppData.toString());
   } else {
     log('Rejected "Display In-App Message": Group is missing.');
   }
@@ -936,13 +971,57 @@ scenarios:
       debug: true
     };
 
-    mock('callInWindow', function(method, groupName) {
+    mock('callInWindow', function(method, groupName, displayInAppData) {
       assertThat(method).isEqualTo('FlareLane.displayInApp');
       assertThat(groupName).isEqualTo('welcomeMessage');
     });
 
     runCode(mockData);
-    assertApi('callInWindow').wasCalledWith('FlareLane.displayInApp', 'welcomeMessage');
+    assertApi('callInWindow').wasCalledWith('FlareLane.displayInApp', 'welcomeMessage', {});
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Display In-App Message - FlareLane Exists With Data
+  code: |-
+    mockData = {
+      method: 'displayInApp',
+      displayInAppGroup: 'viewProduct',
+      displayInAppData: [
+        { key: 'product_id', value: '12345' },
+        { key: 'category', value: 'food' }
+      ],
+      debug: true
+    };
+
+    mock('callInWindow', function(method, groupName, displayInAppData) {
+      assertThat(method).isEqualTo('FlareLane.displayInApp');
+      assertThat(groupName).isEqualTo('viewProduct');
+      assertThat(displayInAppData.product_id).isEqualTo('12345');
+      assertThat(displayInAppData.category).isEqualTo('food');
+    });
+
+    runCode(mockData);
+    assertApi('callInWindow').wasCalledWith('FlareLane.displayInApp', 'viewProduct', { product_id: '12345', category: 'food' });
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Display In-App Message - Deferred Execution
+  code: |-
+    mockData = {
+      method: 'displayInApp',
+      displayInAppGroup: 'viewProduct',
+      displayInAppData: [{ key: 'product_id', value: '12345' }],
+      debug: true
+    };
+
+    mock('copyFromWindow', function(object) {
+      return undefined;
+    });
+
+    mock('createQueue', function(queueName) {
+      assertThat(queueName).isEqualTo('FlareLaneDeferred');
+      return function(callback) {
+        assertThat(typeof callback).isEqualTo('function');
+      };
+    });
+
+    runCode(mockData);
     assertApi('gtmOnSuccess').wasCalled();
 - name: Set User Attributes - FlareLane Exists
   code: |-
