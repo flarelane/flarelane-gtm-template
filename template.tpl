@@ -102,6 +102,32 @@ ___TEMPLATE_PARAMETERS___
     ]
   },
   {
+    "type": "SELECT",
+    "name": "region",
+    "displayName": "Region",
+    "macrosInSelect": false,
+    "selectItems": [
+      {
+        "value": "us",
+        "displayValue": "US (default)"
+      },
+      {
+        "value": "kr",
+        "displayValue": "KR (Seoul)"
+      }
+    ],
+    "simpleValueType": true,
+    "defaultValue": "us",
+    "help": "Choose KR only if your FlareLane project was created in the Seoul region. The install code in the FlareLane console shows region: \"kr\" for those projects. Keep US for all other projects.",
+    "enablingConditions": [
+      {
+        "paramName": "method",
+        "paramValue": "initialize",
+        "type": "EQUALS"
+      }
+    ]
+  },
+  {
     "type": "TEXT",
     "name": "userId",
     "displayName": "User ID",
@@ -456,10 +482,16 @@ if (method ===  'displayInApp') {
 if (method ===  'initialize') {
   const projectId = data.projectId;
   const serviceWorkerPath = data.serviceWorkerPath;
+  // 서울 리전 프로젝트만 region 을 넘긴다. 값이 없거나(이전에 저장된 태그) us 면 넘기지 않아
+  // SDK 기본값 us 로 동작하고 initialize 인자도 이전과 같다
+  const region = data.region;
   const configs = {
     projectId: projectId,
     serviceWorkerPath: serviceWorkerPath ? serviceWorkerPath : undefined,
   };
+  if (region && region !== 'us') {
+    configs.region = region;
+  }
   
   if (projectId) {
     if (deferred) {
@@ -469,6 +501,9 @@ if (method ===  'initialize') {
       callInWindow(pathToFunction('initialize'), configs);
     }
     log('Execute "Initialize": ' + projectId + serviceWorkerPath ? ', ' + serviceWorkerPath : '');
+    if (configs.region) {
+      log('Region: ' + configs.region);
+    }
   } else {
     log('Rejected "Initialize": "Project ID" is empty.');
   }
@@ -1118,6 +1153,74 @@ scenarios:
 
     runCode(mockData);
     assertApi('callInWindow').wasCalledWith('FlareLane.initialize', { projectId: 'my_flarelane_project', serviceWorkerPath: '/sw.js' });
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Initialize - Region US Is Not Passed
+  code: |-
+    mockData = {
+      method: 'initialize',
+      projectId: 'my_flarelane_project',
+      serviceWorkerPath: '/sw.js',
+      region: 'us',
+      debug: true
+    };
+
+    mock('callInWindow', function(method, configObj) {
+      assertThat(method).isEqualTo('FlareLane.initialize');
+      assertThat(configObj.region).isUndefined();
+    });
+
+    runCode(mockData);
+    assertApi('callInWindow').wasCalledWith('FlareLane.initialize', { projectId: 'my_flarelane_project', serviceWorkerPath: '/sw.js' });
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Initialize - Region KR
+  code: |-
+    mockData = {
+      method: 'initialize',
+      projectId: 'my_flarelane_project',
+      serviceWorkerPath: '/sw.js',
+      region: 'kr',
+      debug: true
+    };
+
+    mock('callInWindow', function(method, configObj) {
+      assertThat(method).isEqualTo('FlareLane.initialize');
+      assertThat(configObj.projectId).isEqualTo('my_flarelane_project');
+      assertThat(configObj.region).isEqualTo('kr');
+    });
+
+    runCode(mockData);
+    assertApi('callInWindow').wasCalledWith('FlareLane.initialize', { projectId: 'my_flarelane_project', serviceWorkerPath: '/sw.js', region: 'kr' });
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Initialize - Region KR Deferred Execution
+  code: |-
+    mockData = {
+      method: 'initialize',
+      projectId: 'my_flarelane_project',
+      serviceWorkerPath: '/sw.js',
+      region: 'kr',
+      debug: true
+    };
+
+    mock('copyFromWindow', function(object) {
+      return undefined;
+    });
+
+    let initializedWith;
+    mock('createQueue', function(queueName) {
+      assertThat(queueName).isEqualTo('FlareLaneDeferred');
+      return function(callback) {
+        callback({
+          initialize: function(configObj) {
+            initializedWith = configObj;
+          }
+        });
+      };
+    });
+
+    runCode(mockData);
+    assertThat(initializedWith.projectId).isEqualTo('my_flarelane_project');
+    assertThat(initializedWith.region).isEqualTo('kr');
+    assertApi('callInWindow').wasNotCalled();
     assertApi('gtmOnSuccess').wasCalled();
 
 
