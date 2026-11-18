@@ -2,9 +2,11 @@ homepage: "https://www.flarelane.com"
 documentation: "https://docs.flarelane.co.kr"
 versions:
   # Latest version
+  - sha: 258b9441bd4f47b1800e2ae6430d10ea0ec7799f
+    changeNotes: Add region option for Seoul-region projects
+  # Older versions
   - sha: 87fc605d2cd8a294f63ae199e526c2e57e1f36c3
     changeNotes: Add access global permission for setUserAttributes
-  # Older versions
   - sha: c660a7aff062d0a2c5a7e1be1363b3af3f7f4c90
     changeNotes: Add Data table in displayInApp method
   - sha: 577732ca077dec7b2c8ef040be5b2aebb6576a66
